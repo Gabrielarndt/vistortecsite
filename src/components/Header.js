@@ -36,6 +36,7 @@ const Header = () => {
         <Link to="/">Início</Link>
         <Link to="/servicos">Serviços</Link>
         <Link to="/sobre">Sobre Nós</Link>
+        <Link to="/clientesPage">Clientes</Link>
         <Link to="/contato">Contato</Link>
         <Link to="/Login">Logar</Link>
         <Link to="/view-request">Ver Requisições</Link>

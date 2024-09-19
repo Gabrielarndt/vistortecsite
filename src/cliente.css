@@ -1,0 +1,51 @@
+/* ClienteCard.css */
+.cliente-card {
+    background-color: #f0f0f0; /* Cor de fundo personalizada */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza os elementos verticalmente */
+  }
+  
+  .cliente-card img {
+    max-width: 120px; /* Ajuste o tamanho da imagem */
+    border-radius: 50%;
+    margin-bottom: 15px;
+  }
+  
+  .cliente-card h2 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .cliente-card p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+  }
+  
+  .cliente-card .buttons {
+    display: flex;
+    justify-content: center; /* Centraliza os botões horizontalmente */
+    gap: 10px; /* Espaçamento entre os botões */
+  }
+  
+  .clientes-page {
+    background-color: #f7f7f7;
+    padding: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Estilos para responsividade */
+  @media (max-width: 768px) {
+    .clientes-card {
+      width: 100%;
+    }
+  }

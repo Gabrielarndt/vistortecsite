@@ -1,40 +1,24 @@
 import React from 'react';
-import styled from 'styled-components';
+import '../index.css';
+import perfil from '../imagens/perfil.avif'
+import AboutPage from '../pages/AboutPage';
 
-const AboutContainer = styled.section`
-  padding: 50px;
-  background-color: #fff;
-  text-align: center;
-`;
+<div className="sobre-section">
+<div className="sobre-header">
+  <h2>SOBRE</h2>
+</div>
+<p className="sobre-descricao">
+  As pessoas por trás da Vistortec:
+</p>
+<p className="sobre-texto">
+  O sucesso de qualquer empresa ou organização é resultado direto da qualidade e competência de seu time de colaboradores. Nós da <span className="vistoria-prime">Vistortec</span> sabemos disso e temos orgulho em poder contar com uma excelente equipe de profissionais.
+</p>
 
-const AboutTitle = styled.h2`
-  font-size: 36px;
-  margin-bottom: 40px;
-`;
-
-const AboutContent = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-
-  p {
-    font-size: 18px;
-    line-height: 1.6;
-  }
-`;
-
-const AboutUs = () => {
-  return (
-    <AboutContainer>
-      <AboutTitle>Sobre Nós</AboutTitle>
-      <AboutContent>
-        <p>
-          Somos uma empresa especializada em vistorias imobiliárias, com anos de
-          experiência no mercado. Nosso compromisso é garantir a qualidade e a
-          segurança das suas transações imobiliárias.
-        </p>
-      </AboutContent>
-    </AboutContainer>
-  );
-};
-
-export default AboutUs;
+<div className="equipe">
+  <div className="membro">
+    <img src={perfil} alt="Carlos Vargas" />
+    <h4>Kleber</h4>
+    <p>Fundador</p>
+  </div>
+</div>
+</div>

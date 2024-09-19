@@ -54,6 +54,7 @@ const ViewRequests = () => {
           nomesLocatarios: ['João Silva'],
           dadosVistoria: 'Nenhum dano identificado',
           observacoes: 'Cliente deseja vistoria rápida.',
+          email_cliente: 'joao@hotmail.com'
         },
         // Mais pedidos podem ser adicionados aqui
       ];
@@ -87,6 +88,7 @@ const ViewRequests = () => {
             <RequestDetail>Nomes dos Locatários: {request.nomesLocatarios.join(', ')}</RequestDetail>
             <RequestDetail>Dados da Vistoria: {request.dadosVistoria}</RequestDetail>
             <RequestDetail>Observações: {request.observacoes}</RequestDetail>
+            <RequestDetail>Email: {request.email_cliente}</RequestDetail>
           </RequestItem>
         ))}
       </RequestList>

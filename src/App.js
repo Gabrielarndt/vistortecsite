@@ -12,10 +12,24 @@ import RegisterInspection from './pages/RegisterInspection';
 import ViewInspections from './pages/ViewInspections';
 import RequestInspection from './pages/RequestInspection';
 import ViewRequest from './pages/ViewRequests';
+import ClientesPage from './pages/ClientePage';
+import styled from 'styled-components';
+
+const MainContent = styled.main`
+  flex: 1; /* Faz o conteúdo principal crescer para preencher o espaço disponível */
+`;
+
+const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Faz o contêiner ocupar toda a altura da tela */
+`;
 
 const App = () => {
   return (
     <Router>
+       <AppContainer>
+       <MainContent>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -31,8 +45,11 @@ const App = () => {
         />
         <Route path="/request-Inspection" element={<RequestInspection />} />
         <Route path="/view-request" element={<ViewRequest />} />
+        <Route path="/clientesPage" element={<ClientesPage />} />
       </Routes>
+      </MainContent>
       <Footer />
+      </AppContainer>
     </Router>
   );
 };

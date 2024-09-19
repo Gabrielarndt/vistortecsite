@@ -1,9 +1,6 @@
-// src/pages/RequestInspection.js
-
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import '../requestStyle.css';
-
 
 const RequestContainer = styled.div`
   display: flex;
@@ -105,12 +102,17 @@ const RequestInspection = () => {
             pinturaNova: false,
             possuiMoveisSobMedida: false,
         },
-        endereco: '',
+        rua: '',
+        bairro: '',
+        cidade: '',
+        estado: '',
+        cep: '',
         receberVistoria: '',
         localizador: '',
-        nomesLocatarios: [],
+        nomesLocatarios: [''],
         dadosVistoria: '',
         observacoes: '',
+        email_cliente: '',
     });
 
     const handleChange = (e) => {
@@ -145,17 +147,62 @@ const RequestInspection = () => {
         });
     };
 
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        try {
+            const response = await fetch('http://localhost:5000/api/inspection-request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                alert('Pedido de vistoria enviado com sucesso!');
+                // Opcional: Limpar o formulário após o envio bem-sucedido
+                setFormData({
+                    tipoVistoria: '',
+                    tipoImovel: '',
+                    mobiliario: '',
+                    inventario: false,
+                    estadoImovel: {
+                        imovelNovo: false,
+                        entregueLimpo: false,
+                        energiaEletricaLigada: false,
+                        pinturaNova: false,
+                        possuiMoveisSobMedida: false,
+                    },
+                    rua: '',
+                    bairro: '',
+                    cidade: '',
+                    estado: '',
+                    cep: '',
+                    receberVistoria: '',
+                    localizador: '',
+                    nomesLocatarios: [],
+                    dadosVistoria: '',
+                    observacoes: '',
+                    email_cliente: '',
+                });
+            } else {
+                const errorData = await response.json();
+                alert('Erro ao enviar pedido de vistoria: ' + errorData.error);
+            }
+        } catch (error) {
+            console.error('Erro ao enviar pedido de vistoria:', error);
+            alert('Erro ao enviar pedido de vistoria.');
+        }
+    };
+
     const handleLocatarioChange = (index, value) => {
         const novosLocatarios = [...formData.nomesLocatarios];
         novosLocatarios[index] = value;
         setFormData({ ...formData, nomesLocatarios: novosLocatarios });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Lógica para enviar o pedido de vistoria
-        console.log(formData);
-    };
 
     return (
         <RequestContainer>
@@ -381,6 +428,18 @@ const RequestInspection = () => {
                     />
                 </FormGroup>
 
+                <FormGroup>
+                    <Label>Email</Label>
+                    <input
+                        type="text"
+                        name="email_cliente"
+                        value={formData.email_cliente}
+                        onChange={handleChange}
+                        required
+                    />
+                </FormGroup>
+
+
                 <ButtonGroup>
                     <Button type="submit">Enviar Pedido</Button>
                     <Button type="button" onClick={() => console.log('Cancelado')}>
@@ -391,6 +450,7 @@ const RequestInspection = () => {
         </RequestContainer>
     );
 };
+
 
 export default RequestInspection;
 

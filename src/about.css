@@ -1,0 +1,81 @@
+.about-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .about-header {
+    background-color: #1100ff;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    color: white;
+  }
+  
+  .about-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: white;
+  }
+  
+  .about-header p {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .about-content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 100%;
+    padding: 20px;
+    background-image: url('/');
+    background-size: cover;
+  }
+  
+  .about-text {
+    width: 60%;
+    color: #333;
+    font-size: 16px;
+  }
+  
+  .about-quote {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #9A7B2E;
+    font-size: 18px;
+  }
+  
+  .quote-line {
+    width: 100px;
+    border: 1px solid #9A7B2E;
+    margin: 10px 0;
+  }
+  
+  .square-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }
+  
+  .contact-button {
+    margin-top: 30px;
+  }
+  
+  .contact-button button {
+    background-color: #F5A623;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .contact-button button:hover {
+    background-color: #D4881A;
+  }
+  
