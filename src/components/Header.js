@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -38,9 +40,9 @@ const Header = () => {
         <Link to="/sobre">Sobre Nós</Link>
         <Link to="/clientesPage">Clientes</Link>
         <Link to="/contato">Contato</Link>
-        <Link to="/Login">Logar</Link>
         <Link to="/view-request">Ver Requisições</Link>
         <Link to="/request-Inspection">Requisitar</Link>
+        <Link to="/user-profile"><FontAwesomeIcon icon={faUser} /></Link>
       </Nav>
     </HeaderContainer>
   );

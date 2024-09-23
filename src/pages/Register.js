@@ -1,63 +1,107 @@
-// src/pages/RegisterPage.js
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; 
+import "../auth.css";
 
-import React from 'react';
-import styled from 'styled-components';
+const Register = () => {
+  const navigate = useNavigate(); 
 
-const RegisterPageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f5f5f5;
-`;
+  const [formData, setFormData] = useState({
+    fullName: '',
+    phoneNumber: '',
+    email: '',
+    password: '',
+  });
 
-const RegisterForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
-`;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-const Input = styled.input`
-  margin-bottom: 20px;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-`;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:5000/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert('Usuário registrado com sucesso!');
+        // Redirecionar ou limpar o formulário
+      } else {
+        alert('Erro ao registrar usuário: ' + data.message);
+      }
+    } catch (error) {
+      console.error('Erro ao enviar requisição:', error);
+    }
+  };
 
-const Button = styled.button`
-  padding: 10px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #28a745;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  const handleLogar = () => {
+    navigate("/login"); 
+  };
 
-  &:hover {
-    background-color: #218838;
-  }
-`;
-
-const RegisterPage = () => {
   return (
-    <RegisterPageContainer>
-      <RegisterForm>
-        <h2>Register</h2>
-        <Input type="text" placeholder="Name" />
-        <Input type="email" placeholder="Email" />
-        <Input type="password" placeholder="Password" />
-        <Input type="password" placeholder="Confirm Password" />
-        <Button type="submit">Register</Button>
-        <a href='/login'>Logar</a>
-      </RegisterForm>
-    </RegisterPageContainer>
+    <div className="register-container">
+      <div className="box">
+        <div className="register-box">
+          <form onSubmit={handleSubmit}>
+            <h2>Registrar</h2>
+            <div className="input-group">
+              <label>Nome completo</label>
+              <input
+               type="text"
+               name="fullName"
+               value={formData.fullName}
+               onChange={handleChange}
+               required
+              />
+            </div>
+            <div className="input-group">
+              <label>Telefone</label>
+              <input
+                type="tel" // Corrigido para 'tel'
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label>Email</label>
+              <input
+                type="email" // Corrigido para 'email'
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label>Senha</label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="button-group">
+              <button type="submit">Registrar</button>
+            </div>
+          </form>
+        </div>
+        <div className="register-side">
+          <h2>Bem vindo!</h2>
+          <p>Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
+          <button onClick={handleLogar} className="button">Logar</button>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default RegisterPage;
+export default Register;

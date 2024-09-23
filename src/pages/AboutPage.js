@@ -1,5 +1,7 @@
 import React from 'react';
 import '../about.css'; // Importando a folha de estilo CSS
+import perfil from '../imagens/perfil.avif'
+import planta from '../imagens/planta.png'
 
 const AboutPage = () => {
   return (
@@ -9,6 +11,8 @@ const AboutPage = () => {
         <h2>+ QUEM SOMOS</h2>
         <p>Conheça nossa história e jeito de trabalhar.</p>
       </div>
+
+      <img className='bannerAbout' src={planta} alt="Vistoria de venda" />
       
       {/* Imagem de fundo e conteúdo */}
       <div className="about-content">
@@ -30,7 +34,7 @@ const AboutPage = () => {
           {/* Linha abaixo do texto */}
           <hr className="quote-line" />
           {/* Foto quadrada abaixo da linha */}
-          <img src="/" alt="Imagem" className="square-image" />
+          <img src={perfil} alt="Imagem" className="square-image" />
         </div>
       </div>
 

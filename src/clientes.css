@@ -1,0 +1,49 @@
+.clientes-section {
+  text-align: center;
+  padding: 50px;
+  background-color: #f9f9f9;
+}
+
+.clientes-section h2 {
+  color: #b08d24;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.clientes-section p {
+  color: #555;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+img {
+  width: 200px;
+  height: 200px;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.parceria {
+  margin-top: 30px;
+}
+
+.parceria a {
+  color: #b08d24;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.parceria a:hover {
+  text-decoration: underline;
+}
+
+.div{
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.slide{
+    padding-left: 200px;
+    padding-right: 100px;
+}

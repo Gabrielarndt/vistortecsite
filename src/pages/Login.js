@@ -1,61 +1,83 @@
-// src/pages/LoginPage.js
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; 
+import Cookies from 'js-cookie'; // Importa a biblioteca
+import '../auth.css';
 
-import React from 'react';
-import styled from 'styled-components';
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate(); 
 
-const LoginPageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f5f5f5;
-`;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-const LoginForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
-`;
+    const user = {
+      email,
+      password,
+    };
 
-const Input = styled.input`
-  margin-bottom: 20px;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-`;
+    const response = await fetch("http://localhost:5000/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
 
-const Button = styled.button`
-  padding: 10px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+    const data = await response.json();
+    if (response.ok && data.success) {
+      // Define o cookie com o email do usuário
+      Cookies.set('userEmail', email, { expires: 7 }); // O cookie expira em 7 dias
+      navigate("/"); 
+    } else {
+      setError("Email ou senha incorretos");
+    }
+  };
 
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
+  const handleRegister = () => {
+    navigate("/register"); 
+  };
 
-const LoginPage = () => {
   return (
-    <LoginPageContainer>
-      <LoginForm>
-        <h2>Login</h2>
-        <Input type="email" placeholder="Email" />
-        <Input type="password" placeholder="Password" />
-        <Button type="submit">Login</Button>
-        <a href='/register'>Registrar</a>
-      </LoginForm>
-    </LoginPageContainer>
+    <div className="login-container">
+      <div className="box">
+        <div className="login-box">
+          <form onSubmit={handleSubmit}>
+            <h2>Login</h2>
+            <div className="input-group">
+              <label>Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label>Senha</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <div className="button-group">
+              <button type="submit">Logar</button>
+            </div>
+            {error && <p className="error-message">{error}</p>}
+            <p>Esqueceu sua senha?</p>
+          </form>
+        </div>
+        <div className="login-side">
+          <h2>Bom ver você!</h2>
+          <p>Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
+          <button onClick={handleRegister} className="button">Registrar</button>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default LoginPage;
+export default Login;

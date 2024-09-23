@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     background-color: white;
-    padding: 20px;
+    padding: 20px 0px 10px 0px;
     font-family: Arial, sans-serif;
   }
   
@@ -31,8 +31,7 @@
     justify-content: space-between;
     margin-top: 20px;
     width: 100%;
-    padding: 20px;
-    background-image: url('/');
+    padding: 20px 300px 20px 300px;
     background-size: cover;
   }
   
@@ -47,13 +46,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #9A7B2E;
+    color: #00a2ff;
     font-size: 18px;
   }
   
   .quote-line {
-    width: 100px;
-    border: 1px solid #9A7B2E;
+    width: 100%;
+    border: 1px solid #003cff;
     margin: 10px 0;
   }
   
@@ -77,5 +76,12 @@
   
   .contact-button button:hover {
     background-color: #D4881A;
+  }
+  
+/* Banner */
+.bannerAbout {
+    height: 250px;
+    width: 100%;
+    
   }
   

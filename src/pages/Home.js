@@ -1,8 +1,9 @@
 import React from 'react';
 import '../index.css';
-import '../contato.css'
-import saidaImagem from '../imagens/saida.png'
-import perfil from '../imagens/perfil.avif'
+import '../contato.css';
+import saidaImagem from '../imagens/saida.png';
+import perfil from '../imagens/perfil.avif';
+
 const Home = () => {
   return (
     <div className="container">
@@ -81,12 +82,12 @@ const Home = () => {
           <p>Por telefone ou online</p>
           
           <div className="contato-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Mail_%28iOS%29.svg" alt="Email Icon" />
+            <img className='icon' src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Mail_%28iOS%29.svg" alt="Email Icon" />
             <a href="mailto:contato@vistoriaprime.com.br">contato@vistoriaprime.com.br</a>
           </div>
           
           <div className="contato-item">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon" />
+            <img className='icon' src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon" />
             <a href="https://wa.me/5547999999999" target="_blank" rel="noreferrer">
               Clique aqui e converse diretamente no WhatsApp
             </a>

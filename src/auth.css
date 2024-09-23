@@ -1,0 +1,85 @@
+.login-container, .register-container {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    padding: 50px;
+    height: 84vh; /* Usa 100% da altura da tela */
+    background-color: #007BFF;
+}
+
+.box{
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    padding: 50px;
+    height: auto; /* Usa 100% da altura da tela */
+    background-color: #007BFF;
+}
+
+.login-box, .register-box {
+    width: 70%; /* Ajuste a largura como necessário */
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px; /* Adicione um pouco de arredondamento */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Adicione uma sombra para destaque */
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+}
+
+.button-group button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.login-side, .register-side {
+    text-align: center;
+    width: 50%; /* Se você deseja que eles ocupem 50% do espaço */
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    color: white;
+    padding: 50px;
+    border-radius: 8px; /* Adicione um pouco de arredondamento */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Adicione uma sombra para destaque */
+    height: 100%;
+    
+}
+
+.login-side h2, .register-side h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.button {
+    width: 30%;
+    padding: 5px;
+    background-color: #0080ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.error-message {
+    color: red; /* Cor vermelha */
+    margin-top: 10px; /* Espaçamento acima da mensagem */
+    font-weight: bold; /* Negrito */
+  }
+  
