@@ -28,7 +28,7 @@ const Nav = styled.nav`
     color: #000;
     font-weight: 500;
   }
-`;
+`; 
 
 const Header = () => {
   return (

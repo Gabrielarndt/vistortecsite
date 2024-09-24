@@ -4,8 +4,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Faz o contêiner ocupar toda a altura da tela */
-    background-color: #f0f0f0; /* Cor de fundo da página */
+    height: 84vh; /* Faz o contêiner ocupar toda a altura da tela */
+    background-color: #001b88; /* Cor de fundo da página */
   }
   
   .profile-container {
@@ -13,7 +13,7 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #0051ff;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 400px; /* Largura fixa */
@@ -21,8 +21,9 @@
   }
   
   .title {
-    color: #333;
+    color: #ffffff;
     margin-bottom: 20px;
+    font-size: 30px;
   }
   
   .info-card {
@@ -36,10 +37,27 @@
   
   .info-label {
     font-weight: bold;
-    color: #555;
+    color: #000000;
+    font-size: 24px;
   }
   
   .info-value {
-    color: #666;
+    color: #000000;
+    margin-bottom: 15px;
+    font-size: 18px;
   }
   
+  .logout-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #005eff; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: #e60000; /* Cor ao passar o mouse */
+  }

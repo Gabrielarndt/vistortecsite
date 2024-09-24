@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-import '../userProfile.css'; // Importa o CSS
+import '../userProfile.css';
 
 const UserProfile = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -28,6 +28,11 @@ const UserProfile = () => {
     }
   }, [navigate]);
 
+  const handleLogout = () => {
+    Cookies.remove('userEmail'); // Remove o cookie do usuário
+    navigate('/login'); // Redireciona para a página de login
+  };
+
   return (
     <div className="app-container">
       <div className="profile-container">
@@ -45,6 +50,9 @@ const UserProfile = () => {
         ) : (
           <p>Carregando informações...</p>
         )}
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
     </div>
   );

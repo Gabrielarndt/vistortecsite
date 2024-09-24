@@ -1,116 +1,24 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import '../requestStyle.css';
-
-const RequestContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background-color: #f5f5f5;
-`;
-
-const RequestForm = styled.form`
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  width: 600px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const FormGroup = styled.div`
-  margin-bottom: 20px;
-`;
-
-const Label = styled.label`
-  margin-bottom: 10px;
-  font-weight: bold;
-`;
-
-const Select = styled.select`
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-`;
-
-const CheckboxGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Checkbox = styled.label`
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-
-  input {
-    margin-right: 10px;
-  }
-`;
-
-const TextArea = styled.textarea`
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const Button = styled.button`
-  padding: 10px 20px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-
-  &:nth-child(2) {
-    background-color: #dc3545;
-
-    &:hover {
-      background-color: #c82333;
-    }
-  }
-`;
+import '../requestStyle.css'; // Atualize o caminho se necessário
 
 const RequestInspection = () => {
     const [formData, setFormData] = useState({
-        tipoVistoria: '',
-        tipoImovel: '',
+        tipo_vistoria: '',
+        tipo_imovel: '',
         mobiliario: '',
         inventario: false,
-        estadoImovel: {
-            imovelNovo: false,
-            entregueLimpo: false,
-            energiaEletricaLigada: false,
-            pinturaNova: false,
-            possuiMoveisSobMedida: false,
-        },
+        imovel_novo: false,
+        entregue_limpo: false,
+        energia_eletrica_ligada: false,
+        pintura_nova: false,
+        possui_moveis_sob_medida: false,
         rua: '',
         bairro: '',
         cidade: '',
         estado: '',
         cep: '',
-        receberVistoria: '',
-        localizador: '',
-        nomesLocatarios: [''],
-        dadosVistoria: '',
+        receber_vistoria: '',
+        dados_vistoria: '',
         observacoes: '',
         email_cliente: '',
     });
@@ -118,35 +26,11 @@ const RequestInspection = () => {
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         if (type === 'checkbox') {
-            if (name.startsWith('estadoImovel')) {
-                setFormData({
-                    ...formData,
-                    estadoImovel: {
-                        ...formData.estadoImovel,
-                        [name.split('.')[1]]: checked,
-                    },
-                });
-            } else {
-                setFormData({
-                    ...formData,
-                    [name]: checked,
-                });
-            }
+            setFormData({ ...formData, [name]: checked });
         } else {
-            setFormData({
-                ...formData,
-                [name]: value,
-            });
+            setFormData({ ...formData, [name]: value });
         }
     };
-
-    const handleAddLocatario = () => {
-        setFormData({
-            ...formData,
-            nomesLocatarios: [...formData.nomesLocatarios, ''],
-        });
-    };
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -164,26 +48,22 @@ const RequestInspection = () => {
                 alert('Pedido de vistoria enviado com sucesso!');
                 // Opcional: Limpar o formulário após o envio bem-sucedido
                 setFormData({
-                    tipoVistoria: '',
-                    tipoImovel: '',
+                    tipo_vistoria: '',
+                    tipo_imovel: '',
                     mobiliario: '',
                     inventario: false,
-                    estadoImovel: {
-                        imovelNovo: false,
-                        entregueLimpo: false,
-                        energiaEletricaLigada: false,
-                        pinturaNova: false,
-                        possuiMoveisSobMedida: false,
-                    },
+                    imovel_novo: false,
+                    entregue_limpo: false,
+                    energia_eletrica_ligada: false,
+                    pintura_nova: false,
+                    possui_moveis_sob_medida: false,
                     rua: '',
                     bairro: '',
                     cidade: '',
                     estado: '',
                     cep: '',
-                    receberVistoria: '',
-                    localizador: '',
-                    nomesLocatarios: [],
-                    dadosVistoria: '',
+                    receber_vistoria: '',
+                    dados_vistoria: '',
                     observacoes: '',
                     email_cliente: '',
                 });
@@ -197,23 +77,17 @@ const RequestInspection = () => {
         }
     };
 
-    const handleLocatarioChange = (index, value) => {
-        const novosLocatarios = [...formData.nomesLocatarios];
-        novosLocatarios[index] = value;
-        setFormData({ ...formData, nomesLocatarios: novosLocatarios });
-    };
-
-
     return (
-        <RequestContainer>
-            <RequestForm onSubmit={handleSubmit}>
+        <div className="request-container">
+            <form className="request-form" onSubmit={handleSubmit}>
                 <h2>Pedido de Vistoria</h2>
 
-                <FormGroup>
-                    <Label>Tipo de Vistoria</Label>
-                    <Select
-                        name="tipoVistoria"
-                        value={formData.tipoVistoria}
+                <div className="form-group">
+                    <label className="label"><h3>Tipo de Vistoria</h3></label>
+                    <select
+                        className="select"
+                        name="tipo_vistoria"
+                        value={formData.tipo_vistoria}
                         onChange={handleChange}
                         required
                     >
@@ -222,14 +96,15 @@ const RequestInspection = () => {
                         <option value="saida">Saída</option>
                         <option value="conferencia">Conferência</option>
                         <option value="venda">Venda</option>
-                    </Select>
-                </FormGroup>
+                    </select>
+                </div>
 
-                <FormGroup>
-                    <Label>Tipo de Imóvel</Label>
-                    <Select
-                        name="tipoImovel"
-                        value={formData.tipoImovel}
+                <div className="form-group">
+                    <label className="label"><h3>Tipo de Imóvel</h3></label>
+                    <select
+                        className="select"
+                        name="tipo_imovel"
+                        value={formData.tipo_imovel}
                         onChange={handleChange}
                         required
                     >
@@ -238,12 +113,13 @@ const RequestInspection = () => {
                         <option value="casa_2_suites">Casa 2 Suítes</option>
                         <option value="kit_net">Kit Net</option>
                         <option value="apartamento">Apartamento</option>
-                    </Select>
-                </FormGroup>
+                    </select>
+                </div>
 
-                <FormGroup>
-                    <Label>Mobiliário</Label>
-                    <Select
+                <div className="form-group">
+                    <label className="label"><h3>Mobiliário</h3></label>
+                    <select
+                        className="select"
                         name="mobiliario"
                         value={formData.mobiliario}
                         onChange={handleChange}
@@ -253,12 +129,12 @@ const RequestInspection = () => {
                         <option value="sem_moveis">Sem Móveis</option>
                         <option value="semi_mobiliado">Semi Mobiliado</option>
                         <option value="mobiliado">Mobiliado</option>
-                    </Select>
-                </FormGroup>
+                    </select>
+                </div>
 
-                <FormGroup>
-                    <Label>Inventário</Label>
-                    <Checkbox>
+                <div className="form-group">
+                    <label className="label"><h3>Inventário</h3></label>
+                    <div className="checkbox">
                         <input
                             type="checkbox"
                             name="inventario"
@@ -266,64 +142,63 @@ const RequestInspection = () => {
                             onChange={handleChange}
                         />
                         Contém Inventário
-                    </Checkbox>
-                </FormGroup>
+                    </div>
+                </div>
 
-                <FormGroup>
-                    <Label>Estado do Imóvel</Label>
-                    <CheckboxGroup>
-                        <Checkbox>
+                <div className="form-group">
+                    <label className="label"><h3>Estado do Imóvel</h3></label>
+                    <div className="checkbox-group">
+                        <div className="checkbox">
                             <input
                                 type="checkbox"
-                                name="estadoImovel.imovelNovo"
-                                checked={formData.estadoImovel.imovelNovo}
+                                name="imovel_novo"
+                                checked={formData.imovel_novo}
                                 onChange={handleChange}
                             />
                             Imóvel Novo?
-                        </Checkbox>
-                        <Checkbox>
+                        </div>
+                        <div className="checkbox">
                             <input
                                 type="checkbox"
-                                name="estadoImovel.entregueLimpo"
-                                checked={formData.estadoImovel.entregueLimpo}
+                                name="entregue_limpo"
+                                checked={formData.entregue_limpo}
                                 onChange={handleChange}
                             />
                             Entregue Limpo?
-                        </Checkbox>
-                        <Checkbox>
+                        </div>
+                        <div className="checkbox">
                             <input
                                 type="checkbox"
-                                name="estadoImovel.energiaEletricaLigada"
-                                checked={formData.estadoImovel.energiaEletricaLigada}
+                                name="energia_eletrica_ligada"
+                                checked={formData.energia_eletrica_ligada}
                                 onChange={handleChange}
                             />
                             Energia Elétrica Ligada?
-                        </Checkbox>
-                        <Checkbox>
+                        </div>
+                        <div className="checkbox">
                             <input
                                 type="checkbox"
-                                name="estadoImovel.pinturaNova"
-                                checked={formData.estadoImovel.pinturaNova}
+                                name="pintura_nova"
+                                checked={formData.pintura_nova}
                                 onChange={handleChange}
                             />
                             Pintura Nova?
-                        </Checkbox>
-                        <Checkbox>
+                        </div>
+                        <div className="checkbox">
                             <input
                                 type="checkbox"
-                                name="estadoImovel.possuiMoveisSobMedida"
-                                checked={formData.estadoImovel.possuiMoveisSobMedida}
+                                name="possui_moveis_sob_medida"
+                                checked={formData.possui_moveis_sob_medida}
                                 onChange={handleChange}
                             />
                             Possui Móveis Sob Medida?
-                        </Checkbox>
-                    </CheckboxGroup>
-                </FormGroup>
+                        </div>
+                    </div>
+                </div>
 
-                <FormGroup>
+                <div className="form-group">
                     <h3>Endereço</h3>
-                    
-                    <label>Rua</label>
+                    <label className="label">Rua</label>
                     <input
                         type="text"
                         name="rua"
@@ -331,7 +206,7 @@ const RequestInspection = () => {
                         onChange={handleChange}
                         required
                     />
-                    <label>Bairro</label>
+                    <label className="label">Bairro</label>
                     <input
                         type="text"
                         name="bairro"
@@ -339,7 +214,7 @@ const RequestInspection = () => {
                         onChange={handleChange}
                         required
                     />
-                    <label>Cidade</label>
+                    <label className="label">Cidade</label>
                     <input
                         type="text"
                         name="cidade"
@@ -347,7 +222,7 @@ const RequestInspection = () => {
                         onChange={handleChange}
                         required
                     />
-                     <label>Estado</label>
+                    <label className="label">Estado</label>
                     <input
                         type="text"
                         name="estado"
@@ -355,7 +230,7 @@ const RequestInspection = () => {
                         onChange={handleChange}
                         required
                     />
-                    <label>CEP</label>
+                    <label className="label">CEP</label>
                     <input
                         type="text"
                         name="cep"
@@ -363,94 +238,64 @@ const RequestInspection = () => {
                         onChange={handleChange}
                         required
                     />
-                </FormGroup>
+                </div>
 
-                <FormGroup>
-                    <Label>Como deseja receber a vistoria?</Label>
-                    <Select
-                        name="receberVistoria"
-                        value={formData.receberVistoria}
+                <div className="form-group">
+                    <label className="label"><h3>Como você gostaria de receber a vistoria?</h3></label>
+                    <select
+                        className="select"
+                        name="receber_vistoria"
+                        value={formData.receber_vistoria}
                         onChange={handleChange}
                         required
                     >
                         <option value="">Selecione</option>
-                        <option value="digital">Digital</option>
-                        <option value="assinatura_eletronica">Assinatura Eletrônica</option>
-                        <option value="impressao">Impressão</option>
-                    </Select>
-                </FormGroup>
+                        <option value="email">Email</option>
+                        <option value="telefone">Telefone</option>
+                    </select>
+                </div>
 
-                <FormGroup>
-                    <Label>Localizador</Label>
-                    <input
-                        type="text"
-                        name="localizador"
-                        value={formData.localizador}
-                        onChange={handleChange}
-                        required
-                    />
-                </FormGroup>
-
-                <FormGroup>
-                    <Label>Nomes do Locatário</Label>
-                    {formData.nomesLocatarios.map((nome, index) => (
-                        <input
-                            key={index}
-                            type="text"
-                            value={nome}
-                            onChange={(e) => handleLocatarioChange(index, e.target.value)}
-                            required
-                        />
-                    ))}
-                    <Button type="button" onClick={handleAddLocatario}>
-                        Adicionar Locatário
-                    </Button>
-                </FormGroup>
-
-                <FormGroup>
-                    <Label>Dados da Vistoria</Label>
-                    <TextArea
-                        name="dadosVistoria"
-                        value={formData.dadosVistoria}
+                <div className="form-group">
+                    <label className="label"><h3>Dados da Vistoria</h3></label>
+                    <textarea
+                        className="text-area"
+                        name="dados_vistoria"
+                        value={formData.dados_vistoria}
                         onChange={handleChange}
                         rows="4"
-                        required
                     />
-                </FormGroup>
+                </div>
 
-                <FormGroup>
-                    <Label>Observações</Label>
-                    <TextArea
+                <div className="form-group">
+                    <label className="label"><h3>Observações</h3></label>
+                    <textarea
+                        className="text-area"
                         name="observacoes"
                         value={formData.observacoes}
                         onChange={handleChange}
                         rows="4"
                     />
-                </FormGroup>
+                </div>
 
-                <FormGroup>
-                    <Label>Email</Label>
+                <div className="form-group">
+                    <label className="label"><h3>Email do Cliente</h3></label>
                     <input
-                        type="text"
+                        type="email"
+                        className="text-area"
                         name="email_cliente"
                         value={formData.email_cliente}
                         onChange={handleChange}
                         required
                     />
-                </FormGroup>
+                </div>
 
-
-                <ButtonGroup>
-                    <Button type="submit">Enviar Pedido</Button>
-                    <Button type="button" onClick={() => console.log('Cancelado')}>
-                        Cancelar
-                    </Button>
-                </ButtonGroup>
-            </RequestForm>
-        </RequestContainer>
+                <div className="button-group">
+                    <button className="button" type="submit">Enviar Pedido</button>
+                    <button className="button" type="button" onClick={() => console.log('Cancelado')}>Cancelar</button>
+                </div>
+            </form>
+        </div>
     );
 };
 
-
 export default RequestInspection;
-
