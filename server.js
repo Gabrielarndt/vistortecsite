@@ -5,10 +5,17 @@ const cors = require("cors");
 const app = express();
 const port = 5000;
 const bcrypt = require("bcrypt");
+const cookieParser = require('cookie-parser');
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', // Permitir somente este domínio
+  credentials: true, // Permitir o envio de cookies
+}));
+
 
 app.use(express.json());
+
+app.use(cookieParser());
 
 // Configuração do pool de conexão com o PostgreSQL
 const pool = new Pool({
@@ -123,36 +130,41 @@ app.post("/api/register", async (req, res) => {
   }
 });
 
-// Rota de login
 app.post("/api/login", async (req, res) => {
-    const { email, password } = req.body;
-  
-    try {
-      // Verificar se o usuário existe
-      const userQuery = await pool.query(
-        "SELECT * FROM usuarios WHERE email = $1",
-        [email]
-      );
-  
-      if (userQuery.rows.length === 0) {
-        return res.status(401).json({ success: false, message: "Email ou senha incorretos." });
-      }
-  
-      const user = userQuery.rows[0];
-  
-      // Verificar a senha
-      const isPasswordValid = await bcrypt.compare(password, user.senha);
-      if (!isPasswordValid) {
-        return res.status(401).json({ success: false, message: "Email ou senha incorretos." });
-      }
-  
-      // Se a autenticação for bem-sucedida
-      res.status(200).json({ success: true, message: "Login bem-sucedido." });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: "Erro ao processar o login." });
+  const { email, password } = req.body;
+
+  try {
+    const userQuery = await pool.query(
+      "SELECT * FROM usuarios WHERE email = $1",
+      [email]
+    );
+
+    if (userQuery.rows.length === 0) {
+      return res.status(401).json({ success: false, message: "Email ou senha incorretos." });
     }
-  });
+
+    const user = userQuery.rows[0];
+    const isPasswordValid = await bcrypt.compare(password, user.senha);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ success: false, message: "Email ou senha incorretos." });
+    }
+
+    // Definir o cookie na resposta
+    res.cookie('user_email', email, { 
+      httpOnly: false,   // Se precisar ser acessado no frontend (para teste), deixe httpOnly como false
+      secure: false,     // Coloque como true se estiver usando HTTPS
+      sameSite: 'Lax',   // Define a política de envio do cookie
+    });
+
+    res.status(200).json({ success: true, message: "Login bem-sucedido." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Erro ao processar o login." });
+  }
+});
+
+
 
   app.get("/api/user-info", async (req, res) => {
     const { email } = req.query; // Obtém o email do usuário da query string
@@ -170,11 +182,46 @@ app.post("/api/login", async (req, res) => {
       res.status(500).json({ success: false, message: "Erro ao obter informações do usuário." });
     }
   });
+
+  app.get('/api/inspections', async (req, res) => {
+    console.log('Cookies recebidos:', req.cookies);  // Adicione isso para depuração
+    const emailLogado = req.cookies.userEmail;  // Verifique se é 'userEmail'
+  
+    if (!emailLogado) {
+      return res.status(401).json({ error: 'Usuário não autenticado' });
+    }
+  
+    try {
+      const result = await pool.query('SELECT * FROM inspection_requests');
+
+      if (result.rows.length === 0) {
+          return res.status(404).json({ error: 'Nenhuma vistoria encontrada' });
+      }
+
+      res.json(result.rows);
+  } catch (error) {
+      console.error('Erro ao buscar as vistorias:', error); // Log do erro
+      res.status(500).json({ error: 'Erro ao buscar as vistorias' });
+  }
+  });
+  
+  app.get('/api/inspections/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+      const inspection = await pool.query('SELECT * FROM inspection_requests WHERE id = $1', [id]);
+      if (inspection.rows.length === 0) {
+        return res.status(404).json({ error: 'Vistoria não encontrada' });
+      }
+      res.json(inspection.rows[0]);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Erro ao buscar a vistoria' });
+    }
+  });
   
   
-
-
-
+  
+  
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });

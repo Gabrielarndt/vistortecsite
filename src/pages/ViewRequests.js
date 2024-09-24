@@ -1,98 +1,72 @@
-// src/pages/ViewRequests.js
-
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-
-const ViewContainer = styled.div`
-  padding: 20px;
-  background-color: #f5f5f5;
-`;
-
-const RequestList = styled.ul`
-  list-style-type: none;
-  padding: 0;
-`;
-
-const RequestItem = styled.li`
-  background-color: #fff;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-`;
-
-const RequestDetail = styled.p`
-  margin: 0;
-  padding: 5px 0;
-  font-weight: bold;
-`;
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import '../viewRequestStyle.css'
 
 const ViewRequests = () => {
-  const [requests, setRequests] = useState([]);
+  const [inspections, setInspections] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  
+  // Email do usuário autorizado
+  const authorizedEmail = "gabrielharndt@hotmail.com";
 
   useEffect(() => {
-    // Lógica para buscar os pedidos de vistoria do servidor
-    // Aqui, estamos simulando os dados
-    const fetchRequests = async () => {
-      const data = [
-        {
-          id: 1,
-          tipoVistoria: 'Entrada',
-          tipoImovel: 'Apartamento',
-          mobiliario: 'Mobiliado',
-          inventario: true,
-          estadoImovel: {
-            imovelNovo: true,
-            entregueLimpo: true,
-            energiaEletricaLigada: true,
-            pinturaNova: true,
-            possuiMoveisSobMedida: false,
-          },
-          endereco: 'Rua A, 123',
-          receberVistoria: 'Digital',
-          localizador: '12345',
-          nomesLocatarios: ['João Silva'],
-          dadosVistoria: 'Nenhum dano identificado',
-          observacoes: 'Cliente deseja vistoria rápida.',
-          email_cliente: 'joao@hotmail.com'
-        },
-        // Mais pedidos podem ser adicionados aqui
-      ];
-      setRequests(data);
-    };
+    const userEmail = Cookies.get('userEmail'); // Corrigido para userEmail
+    console.log('Email do usuário logado:', userEmail);
 
-    fetchRequests();
-  }, []);
+    if (!userEmail || userEmail !== authorizedEmail) {
+      alert('Você não tem permissão para acessar essa página.');
+      navigate('/');
+    } else {
+      fetchInspections(userEmail);
+    }
+  }, [navigate]);
 
-  return (
-    <ViewContainer>
-      <h2>Pedidos de Vistoria</h2>
-      <RequestList>
-        {requests.map((request) => (
-          <RequestItem key={request.id}>
-            <RequestDetail>Tipo de Vistoria: {request.tipoVistoria}</RequestDetail>
-            <RequestDetail>Tipo de Imóvel: {request.tipoImovel}</RequestDetail>
-            <RequestDetail>Mobiliário: {request.mobiliario}</RequestDetail>
-            <RequestDetail>Inventário: {request.inventario ? 'Sim' : 'Não'}</RequestDetail>
-            <RequestDetail>Estado do Imóvel:</RequestDetail>
-            <ul>
-              <li>Imóvel Novo: {request.estadoImovel.imovelNovo ? 'Sim' : 'Não'}</li>
-              <li>Entregue Limpo: {request.estadoImovel.entregueLimpo ? 'Sim' : 'Não'}</li>
-              <li>Energia Elétrica Ligada: {request.estadoImovel.energiaEletricaLigada ? 'Sim' : 'Não'}</li>
-              <li>Pintura Nova: {request.estadoImovel.pinturaNova ? 'Sim' : 'Não'}</li>
-              <li>Possui Móveis Sob Medida: {request.estadoImovel.possuiMoveisSobMedida ? 'Sim' : 'Não'}</li>
-            </ul>
-            <RequestDetail>Endereço: {request.endereco}</RequestDetail>
-            <RequestDetail>Receber Vistoria: {request.receberVistoria}</RequestDetail>
-            <RequestDetail>Localizador: {request.localizador}</RequestDetail>
-            <RequestDetail>Nomes dos Locatários: {request.nomesLocatarios.join(', ')}</RequestDetail>
-            <RequestDetail>Dados da Vistoria: {request.dadosVistoria}</RequestDetail>
-            <RequestDetail>Observações: {request.observacoes}</RequestDetail>
-            <RequestDetail>Email: {request.email_cliente}</RequestDetail>
-          </RequestItem>
-        ))}
-      </RequestList>
-    </ViewContainer>
+  const fetchInspections = async () => {
+    try {
+        const response = await fetch(`http://localhost:5000/api/inspections`, {
+            credentials: 'include', // Certifique-se de incluir cookies
+        });
+        const data = await response.json();
+        console.log('Resposta do servidor:', data); // Para depuração
+        if (response.ok) {
+            setInspections(data);
+        } else {
+            setError('Erro ao carregar as vistorias: ' + data.error);
+        }
+    } catch (err) {
+        setError('Erro ao carregar as vistorias: ' + err.message);
+    } finally {
+        setLoading(false);
+    }
+};
+
+const handleViewInspection = (id) => {
+  navigate(`/inspection/${id}`);
+};
+
+return (
+  <div className="inspection-list-container">
+    <h2>Lista de Vistorias</h2>
+    {loading && <p>Carregando...</p>}
+    {error && <p>{error}</p>}
+    {!loading && !error && inspections.length === 0 && (
+      <p>Nenhuma vistoria encontrada.</p>
+    )}
+    <div className="inspection-cards">
+      {inspections.map((inspection) => (
+        <div className="inspection-card" key={inspection.id}>
+          <h3>{inspection.tipo_imovel}</h3>
+          <p>Tipo de Vistoria: {inspection.tipo_vistoria}</p>
+          <p>Cidade: {inspection.cidade}</p>
+          <p>Email do Cliente: {inspection.email_cliente}</p>
+          <button onClick={() => handleViewInspection(inspection.id)}>Ver Vistoria</button>
+        </div>
+      ))}
+    </div>
+  </div>
   );
 };
 

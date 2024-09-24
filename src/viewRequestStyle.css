@@ -1,0 +1,60 @@
+body {
+    background-color: #f4f4f4; /* Cor de fundo suave */
+    font-family: 'Arial', sans-serif; /* Fonte moderna */
+    margin: 0;
+  }
+  
+  .inspection-list-container {
+    max-width: 1200px; /* Largura máxima */
+    margin: 0 auto; /* Centraliza */
+    padding: 20px;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333; /* Cor do texto */
+    margin-bottom: 20px; /* Espaço abaixo do título */
+  }
+  
+  .inspection-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Espaçamento entre os cards */
+  }
+  
+  .inspection-card {
+    background-color: #fff; /* Fundo branco para o card */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    transition: transform 0.3s; /* Transição suave para efeito de hover */
+    flex: 1 1 calc(33.33% - 20px); /* 3 cards por linha */
+  }
+  
+  .inspection-card:hover {
+    transform: translateY(-5px); /* Efeito de elevação no hover */
+  }
+  
+  .inspection-card h3 {
+    color: #007BFF; /* Cor do título do card */
+  }
+  
+  .inspection-card p {
+    color: #555; /* Cor do texto */
+    margin: 5px 0; /* Margem vertical */
+  }
+  
+  button {
+    background-color: #007BFF; /* Cor de fundo do botão */
+    color: white; /* Cor do texto do botão */
+    border: none; /* Remove borda padrão */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 10px 15px; /* Espaçamento interno do botão */
+    cursor: pointer; /* Muda o cursor ao passar o mouse */
+    transition: background-color 0.3s; /* Transição suave para hover */
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Cor de fundo no hover */
+  }
+  

@@ -15,6 +15,7 @@ import RequestInspection from './pages/RequestInspection';
 import ViewRequest from './pages/ViewRequests';
 import ClientesPage from './pages/ClientePage';
 import UserProfile from './pages/UserProfile';
+import InspectionDetails from './pages/InspectionDetails';
 
 import styled from 'styled-components';
 
@@ -63,7 +64,9 @@ const App = () => {
             <Route path="/request-inspection" element={<ProtectedRoute element={<RequestInspection />} />} />
             <Route path="/view-request" element={<ProtectedRoute element={<ViewRequest />} />} />
             <Route path="/clientesPage" element={<ProtectedRoute element={<ClientesPage />} />} />
+            <Route path="/clientesPage" element={<ProtectedRoute element={<ClientesPage />} />} />
             <Route path="/user-profile" element={<ProtectedRoute element={<UserProfile />} />} />
+            <Route path="/inspection/:id" element={<ProtectedRoute element={<InspectionDetails />} />} />
           </Routes>
         </MainContent>
         <Footer />
